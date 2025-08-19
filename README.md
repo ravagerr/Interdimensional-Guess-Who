@@ -47,6 +47,35 @@ npx expo start
 - **Location**: Current location
 - **Episode Count**: Number of appearances (with higher/lower hints)
 
+## 📱 Demo
+
+### Video Showcase
+
+https://github.com/ravagerr/Interdimensional-Guess-Who/tree/main/demo/showcase.mp4
+
+### Screenshots
+
+<div align="center">
+  <img src="demo/IMG_3096.PNG" width="200" alt="Home Screen"/>
+  <img src="demo/IMG_3097.PNG" width="200" alt="Character Selection"/>
+  <img src="demo/IMG_3098.PNG" width="200" alt="Game Play"/>
+  <img src="demo/IMG_3099.PNG" width="200" alt="Hints Display"/>
+</div>
+
+<div align="center">
+  <img src="demo/IMG_3100.PNG" width="200" alt="Character Dex"/>
+  <img src="demo/IMG_3101.PNG" width="200" alt="Character Details"/>
+  <img src="demo/IMG_3102.PNG" width="200" alt="Leaderboard"/>
+  <img src="demo/IMG_3103.PNG" width="200" alt="About Screen"/>
+</div>
+
+<div align="center">
+  <img src="demo/IMG_3104.PNG" width="200" alt="Game Progress"/>
+  <img src="demo/IMG_3105.PNG" width="200" alt="Winning Screen"/>
+  <img src="demo/IMG_3106.PNG" width="200" alt="Character Search"/>
+  <img src="demo/IMG_3107.PNG" width="200" alt="App Navigation"/>
+</div>
+
 ## Known issues
 
 1. **Incomplete API data**  
