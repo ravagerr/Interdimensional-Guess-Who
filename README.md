@@ -49,8 +49,6 @@ npx expo start
 
 ## Known issues
 
-	## 🐛 Known Issues  
-
 1. **Incomplete API data**  
    The Rick & Morty API can be patchy/polluted the `type` field is missing, origins show up as “unknown,” or gender data is inconsistent. If you get an unlucky character, this messy data can throw off the flow of the game.  
 
@@ -65,7 +63,7 @@ npx expo start
 
 5. **Clunky search lists**  
    The play state currently uses two separate search lists, and one resets the loaded characters. This could be streamlined into a single, more reliable list.  
-   
+
 ## 🤝 Credits
 
 - **Rick and Morty API**: [rickandmortyapi.com](https://rickandmortyapi.com/)
