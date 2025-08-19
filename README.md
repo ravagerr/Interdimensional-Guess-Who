@@ -15,8 +15,7 @@ Built with Typescript, Apollo Client, and the Rick & Morty GraphQL API
 
 ```bash
 # Clone the repository
-git clone <repo-url>
-cd unmade-app
+git clone https://github.com/ravagerr/Interdimensional-Guess-Who.git
 
 # Install dependencies
 npm install --legacy-peer-deps
