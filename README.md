@@ -19,7 +19,7 @@ git clone <repo-url>
 cd unmade-app
 
 # Install dependencies
-npm install
+npm install --legacy-peer-deps
 
 # Start the development server
 npx expo start
