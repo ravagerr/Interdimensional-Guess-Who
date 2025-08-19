@@ -61,9 +61,6 @@ npx expo start
 4. **No give-up option**  
    Right now, if you want to quit mid-game, you pretty much have to restart the app. A “give up” button would be nice.
 
-5. **Clunky search lists**  
-   The play state currently uses two separate search lists, and one resets the loaded characters. This could be streamlined into a single, more reliable list.  
-
 ## 🤝 Credits
 
 - **Rick and Morty API**: [rickandmortyapi.com](https://rickandmortyapi.com/)

@@ -32,6 +32,19 @@ export const CHARACTER = gql`
 //   }
 // `;
 
+export const ALL_CHARACTERS = gql`
+  query AllCharacters {
+    characters(page: 1) {
+      info { count pages }
+      results {
+        id name status species type gender image
+        origin { name } location { name }
+        episode { id }
+      }
+    }
+  }
+`;
+
 export const EPISODES = gql`
   query Episodes($page: Int, $filter: FilterEpisode) {
     episodes(page: $page, filter: $filter) {

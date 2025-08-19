@@ -34,6 +34,8 @@ export default function CharacterCard({
             borderColor: theme.colors.border
           }}
           contentFit="cover"
+          cachePolicy="memory-disk"
+          transition={200}
         />
 
       <Pressable 

@@ -1,12 +1,12 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { View, Text, TextInput, FlatList, Pressable, Modal, ScrollView, Alert, Platform } from "react-native";
 import { Image } from "expo-image";
-import { useApolloClient, useQuery } from "@apollo/client";
+import { useApolloClient } from "@apollo/client";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { Search, Lightbulb, Trophy, RefreshCw, Target, Thermometer, Filter } from "lucide-react-native";
 import { useTheme } from "../theme";
-import { CHARACTERS } from "../graphql/queries";
+import { useAllCharacters } from "../hooks/useAllCharacters";
 import { compareGuess } from "../game/compare";
 import { matches, similarity, similarityLabel, type Constraints } from "../game/constraints";
 import HintChips from "../components/HintChips";
@@ -48,13 +48,7 @@ export default function Play() {
   const gameTimeRef = useRef(0); // real time tracking without re-renders
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const { data, fetchMore, refetch, loading: searchLoading } = useQuery(CHARACTERS, {
-    variables: { page: 1, filter: q.trim() ? { name: q } : {} },
-    notifyOnNetworkStatusChange: true,
-  });
-
-  const results = data?.characters?.results ?? [];
-  const next = data?.characters?.info?.next;
+  const { characters: allCharacters, loading: charactersLoading, totalCount } = useAllCharacters();
   const initialiseGame = useCallback(async () => {
     try {
       setLoading(true);
@@ -96,21 +90,23 @@ export default function Play() {
   }, [startTime, gameOver]);
 
   // compute filtered list and candidates count
-  const all = data?.characters?.results ?? [];
-  const filtered = all.filter((c: any) => matches(c, constraints));
-  const availableCharacters = filtered;
+  const searchFiltered = allCharacters.filter((c: any) => 
+    q.trim() === '' || c.name.toLowerCase().includes(q.toLowerCase())
+  );
+  const constraintFiltered = searchFiltered.filter((c: any) => matches(c, constraints));
+  const availableCharacters = constraintFiltered;
   
-  useEffect(() => setCandidates(filtered.length), [filtered]);
+  useEffect(() => setCandidates(constraintFiltered.length), [constraintFiltered]);
 
   // compute available values for filter options from all loaded characters
   const availableValues = {
-    statuses: [...new Set(all.map((c: any) => c.status).filter(Boolean))] as string[],
-    species: [...new Set(all.map((c: any) => c.species).filter(Boolean))] as string[],
-    types: [...new Set(all.map((c: any) => c.type).filter(Boolean))] as string[],
-    genders: [...new Set(all.map((c: any) => c.gender).filter(Boolean))] as string[],
-    origins: [...new Set(all.map((c: any) => c.origin?.name).filter(Boolean))] as string[],
-    locations: [...new Set(all.map((c: any) => c.location?.name).filter(Boolean))] as string[],
-    maxEpisodes: Math.max(...all.map((c: any) => c.episode?.length ?? 0), 10)
+    statuses: [...new Set(allCharacters.map((c: any) => c.status).filter(Boolean))] as string[],
+    species: [...new Set(allCharacters.map((c: any) => c.species).filter(Boolean))] as string[],
+    types: [...new Set(allCharacters.map((c: any) => c.type).filter(Boolean))] as string[],
+    genders: [...new Set(allCharacters.map((c: any) => c.gender).filter(Boolean))] as string[],
+    origins: [...new Set(allCharacters.map((c: any) => c.origin?.name).filter(Boolean))] as string[],
+    locations: [...new Set(allCharacters.map((c: any) => c.location?.name).filter(Boolean))] as string[],
+    maxEpisodes: Math.max(...allCharacters.map((c: any) => c.episode?.length ?? 0), 10)
       };
 
     const onGuess = async (c: any) => {
@@ -152,19 +148,10 @@ export default function Play() {
 
   const handleSearch = useCallback((text: string) => {
     setQ(text);
-    refetch({ page: 1, filter: text.trim() ? { name: text } : {} });
-  }, [refetch]);
-
-  const handleEndReached = useCallback(() => {
-    if (next && !searchLoading) {
-      fetchMore({ 
-        variables: { page: next, filter: q.trim() ? { name: q } : {} }
-      });
-    }
-  }, [next, searchLoading, fetchMore, q]);
+  }, []);
 
   // main loading screen when navigating to the page
-  if (loading) {
+  if (loading || charactersLoading) {
     return (
       <View style={{ 
         flex: 1, 
@@ -183,7 +170,7 @@ export default function Play() {
           marginBottom: theme.spacing.lg,
           color: theme.colors.text,
           fontWeight: theme.typography.weights.medium
-        }}>Loading new game...</Text>
+        }}>{'Loading new game...'}</Text>
       </View>
     );
   }
@@ -233,7 +220,7 @@ export default function Play() {
                 fontSize: theme.typography.sizes.sm,
                 fontWeight: theme.typography.weights.medium
               }}>
-                {guesses.length}/{MAX_GUESSES} • {candidates} left • {tokens} hints
+                {guesses.length}/{MAX_GUESSES} • {candidates}/{totalCount || 826} left • {tokens} hints
               </Text>
             </View>
             <View style={{
@@ -442,8 +429,6 @@ export default function Play() {
             <FlatList
               data={availableCharacters}
               keyExtractor={(item) => item.id}
-              onEndReached={handleEndReached}
-              onEndReachedThreshold={0.1}
               renderItem={({ item }) => (
                 <CharacterCard 
                   item={item} 
@@ -452,7 +437,7 @@ export default function Play() {
                 />
               )}
               ListEmptyComponent={() => {
-                if (searchLoading) {
+                if (charactersLoading) {
                   return <LoadingSkeleton />;
                 }
                 
@@ -617,6 +602,8 @@ export default function Play() {
                     marginBottom: theme.spacing.md
                   }}
                   contentFit="cover"
+                  cachePolicy="memory-disk"
+                  transition={300}
                 />
               )}
               <Text style={{ 
