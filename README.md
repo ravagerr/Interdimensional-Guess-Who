@@ -49,7 +49,20 @@ npx expo start
 
 ## Known issues
 
-.... wait
+	1.	Incomplete API data
+   The Rick & Morty API can be a patchy/polluted the type field is missing, origins show up as “unknown,” or gender data is inconsistent. If you get an unlucky character, this messy data can throw off the flow of the game.
+
+   2.	Heavy character images
+   Character images are ~35kb each (300x300), but could easily be compressed down to ~6kb. With smaller images, we could preload all 826 characters and ditch the need for pagination/infinite scroll. That alone would make filters and gameplay feel way smoother.
+
+	3.	All hints match, but still not correct
+   Occasionally, you’ll hit a situation where every hint matches but the guess still isn’t the right character and you’ve got lots of guesses left. A nice solution here would be a letter reveal on screen to give players a better indication.
+
+	4.	No give up option
+   Right now, if you want to quit mid-game, you pretty much have to restart the app. A simple “give up” button would fix that.
+   
+	5.	Clunky search lists
+   The play state currently uses two separate search lists, and one resets the loaded characters. This could be streamlined into a single, more reliable list.
 
 ## 🤝 Credits
 
