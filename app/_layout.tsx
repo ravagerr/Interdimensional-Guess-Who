@@ -4,7 +4,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { ThemeProvider } from "./theme";
 import { Stack } from "expo-router";
-import { OfflineGuard } from "./components/OfflineGuard";
+import OfflineGuard from "./components/OfflineGuard";
 
 export default function RootLayout() {
   return (

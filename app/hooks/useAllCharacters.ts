@@ -98,7 +98,7 @@ export function useAllCharacters(): UseAllCharactersResult {
             client.query({
               query: CHARACTERS,
               variables: { page },
-              fetchPolicy: 'network-only'
+              fetchPolicy: 'no-cache'
             })
           );
         }
