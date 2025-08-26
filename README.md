@@ -1,9 +1,9 @@
-# 🌌 Interdimensional Guess Who
+# Interdimensional Guess Who
 A React Native guessing game where you identify the Rick & Morty character based on hints and their attributes
 
 Built with Typescript, Apollo Client, and the Rick & Morty GraphQL API
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -26,7 +26,7 @@ npx expo start
 # Scan the QR code with Expo Go app
 ```
 
-## 🎮 How to Play
+## How to Play
 
 1. **Start a Game**: Navigate to the "Play" tab to begin a new round / Press on Play button on home screen lol
 2. **Search & Guess**: Type character names to search and tap to make a guess, or choose from list
@@ -46,7 +46,7 @@ npx expo start
 - **Location**: Current location
 - **Episode Count**: Number of appearances (with higher/lower hints)
 
-## 📱 Demo
+## Demo
 
 ### Video Showcase
 
@@ -95,7 +95,7 @@ https://github.com/ravagerr/Interdimensional-Guess-Who/tree/main/demo/showcase.m
 - **Character Data**: All character information and images provided by the API
 - **Icons**: Emoji icons for simplicity and universal compatibility
 
-## 📄 License
+## License
 
 This project is for educational and demonstration purposes. Rick and Morty characters and imagery are property of their respective owners.
 
